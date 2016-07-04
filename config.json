@@ -1,4 +1,5 @@
 {
-	"username": "oonibot",
-	"password": "changeme"
+	"token": "-get from github.com/settings/tokens-",
+	"user": "oonibot",
+	"repo": "thetorproject/ooni-probe"
 }
