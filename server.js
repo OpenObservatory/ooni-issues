@@ -8,11 +8,24 @@ var path = require('path'),
     port = process.env.PORT || 3000,
     router = express.Router();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+// XXX re-enable
+//app.use(csrfProtection);
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "views")));
 
 router.get('/', function(req, res, next) {
-  res.render('index.html', { csrfToken: req.csrfToken()});
+  res.render('index', {
+    "repositories": [
+      "ooni-pipeline",
+      "ooni-spec",
+      "ooni-probe",
+      "ooni-backend",
+      "lepidopter",
+    ],
+    "csrfToken": ""
+  });
+  //, { csrfToken: req.csrfToken()});
 });
 router.post('/submit', parseForm, csrfProtection, function (req, res) {
   //TODO: submit issue.

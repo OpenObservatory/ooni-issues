@@ -1,0 +1,19 @@
+extends _base
+block body
+    h1 my title
+    div(class="row")
+        div(class="col-md-6")
+            form(name="submit", action="/submit", method="post")
+                div(class="form-group")
+                    label() Title
+                    input(type="text", name="title", class="form-control")
+                input(type="hidden", name="_csrf" value=csrfToken)
+                div(class="form-group")
+                    label() Repository
+                    select()
+                      each repo, i in repositories
+                          option(value=repo) #{repo}
+                div(class="form-group")
+                    label() Body
+                    textarea(name="message", class="form-control", rows="10")
+                input(type="submit", value="submit", class="btn btn-default")
