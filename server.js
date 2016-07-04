@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 router.get('/', csrfProtection, function(req, res, next) {
   res.render('index', {
-    "repositories": Object.keys(repos).map(r => repos[r]),
+    "repositories": Object.keys(repos).map(function(r) {return repos[r];}),
     "csrfToken": req.csrfToken
   });
 });
@@ -35,22 +35,21 @@ router.post('/submit', parseForm, csrfProtection, function (req, res) {
     type: "oauth",
     token: config.token
   });
-  try {
-    github.issues.create({
-      user: config.user,
-      repo: repos[req.body.repo] || "ooni-probe",
-      title: req.body.title,
-      body: req.body.body,
-      labels: ["Autosubmitted"]
-    }, function (err, resp) {
-      if (err) {
-        res.render('error');
-      } else {
-        res.render('success', {
-          resp: resp
-        });
-      }
-    });
+  github.issues.create({
+    user: config.user,
+    repo: repos[req.body.repo] || "ooni-probe",
+    title: req.body.title,
+    body: req.body.body,
+    labels: ["Autosubmitted"]
+  }, function (err, resp) {
+    if (err) {
+      res.render('error');
+    } else {
+      res.render('success', {
+        resp: resp
+      });
+    }
+  });
 });
 
 app.use('/', router);
