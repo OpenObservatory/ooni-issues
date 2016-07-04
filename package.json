@@ -1,9 +1,12 @@
 {
   "name": "ooni-issues",
-  "descriptions": "A web frontend to submit github issues",
+  "description": "A web frontend to submit github issues",
+  "repository": "https://github.com/TheTorProject/ooni-issues",
   "license": "BSD",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "bootstrap": "^3.3.6",
+    "csurf": "^1.9.0",
     "express": "^4.14.0",
     "github": "^2.1.0"
   }
