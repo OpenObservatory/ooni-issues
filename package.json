@@ -2,7 +2,7 @@
   "name": "ooni-issues",
   "description": "A web frontend to submit github issues",
   "repository": "https://github.com/TheTorProject/ooni-issues",
-  "license": "BSD",
+  "license": "BSD-2-Clause",
   "dependencies": {
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.6",

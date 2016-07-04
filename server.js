@@ -10,26 +10,23 @@ var path = require('path'),
     port = process.env.PORT || 3000,
     router = express.Router(),
     config = JSON.parse(fs.readFileSync('config.json')),
-    github = new githubApi({});
+    github = new githubApi({}),
+    repos = {
+      "Probe": "ooni-probe",
+      "Website": "ooni-web",
+      "Explorer": "ooni-explorer",
+      "Lepidopter": "lepidopter"
+    };
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-// XXX re-enable
-//app.use(csrfProtection);
 app.use(express.static(path.join(__dirname, "public")));
 
-router.get('/', function(req, res, next) {
+router.get('/', csrfProtection, function(req, res, next) {
   res.render('index', {
-    "repositories": [
-      "ooni-pipeline",
-      "ooni-spec",
-      "ooni-probe",
-      "ooni-backend",
-      "lepidopter",
-    ],
-    "csrfToken": ""
+    "repositories": Object.keys(repos).map(r => repos[r]),
+    "csrfToken": req.csrfToken
   });
-  //, { csrfToken: req.csrfToken()});
 });
 
 
@@ -38,13 +35,22 @@ router.post('/submit', parseForm, csrfProtection, function (req, res) {
     type: "oauth",
     token: config.token
   });
-  github.issues.create({
-    user: config.user,
-    repo: config.repo,
-    title: "Test Issue",
-    body: "Issue Body",
-    labels: ["Autosubmitted"]
-  });
+  try {
+    github.issues.create({
+      user: config.user,
+      repo: repos[req.body.repo] || "ooni-probe",
+      title: req.body.title,
+      body: req.body.body,
+      labels: ["Autosubmitted"]
+    }, function (err, resp) {
+      if (err) {
+        res.render('error');
+      } else {
+        res.render('success', {
+          resp: resp
+        });
+      }
+    });
 });
 
 app.use('/', router);
