@@ -1,0 +1,10 @@
+{
+  "name": "ooni-issues",
+  "descriptions": "A web frontend to submit github issues",
+  "license": "BSD",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "express": "^4.14.0",
+    "github": "^2.1.0"
+  }
+}
