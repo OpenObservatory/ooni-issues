@@ -1,6 +1,6 @@
 {
 	"token": "-get from github.com/settings/tokens-",
-	"user": "oonibot",
-	"repo": "thetorproject/ooni-probe",
-	"secret": "My secret"
+	"secret": "My secret",
+	"user": "ooni-bot",
+	"repo": "thetorproject/ooni-probe"
 }

@@ -1,6 +1,6 @@
 extends _base
 block body
-    h1 my title
+    h1 Report an issue
     div(class="row")
         div(class="col-md-6")
             form(name="submit", action="/submit", method="post")
@@ -15,5 +15,5 @@ block body
                           option(value=repo) #{repo}
                 div(class="form-group")
                     label() Body
-                    textarea(name="message", class="form-control", rows="10")
+                    textarea(name="body", class="form-control", rows="10")
                 input(type="submit", value="submit", class="btn btn-default")
