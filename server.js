@@ -4,6 +4,7 @@ var path = require('path'),
     csrf = require('csurf'),
     fs = require('fs'),
     githubApi = require('github'),
+    session = require('express-session'),
     csrfProtection = csrf({ cookie: false }),
     parseForm = bodyParser.urlencoded({ extended: false }),
     app = express(),
@@ -21,6 +22,11 @@ var path = require('path'),
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+  resave: false,
+  secret: config.secret,
+  saveUninitialized: true
+}));
 
 router.get('/', csrfProtection, function(req, res, next) {
   res.render('index', {
